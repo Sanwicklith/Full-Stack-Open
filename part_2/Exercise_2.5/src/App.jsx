@@ -1,4 +1,4 @@
-import Course from './Content';
+import Course from './Course/Content';
 
 const App = () => {
   const courses = [
@@ -45,7 +45,7 @@ const App = () => {
       ],
     },
   ];
-  console.log(courses)
+
   return (
     <div>
       <h1>Web development Curriculum</h1>

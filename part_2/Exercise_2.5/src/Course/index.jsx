@@ -1,5 +1,5 @@
 import Header from './Header';
-import Content from './Content';
+import Content from './Course/Content';
 // import Total from './Total';
 
 const Course = ({ course }) => {
