@@ -1,15 +1,13 @@
 const Total = ({ parts }) => {
   return (
     <div>
-      <p>
-        Total of {" "}
-        {parts[0].exercises +
-          parts[1].exercises +
-          parts[2].exercises +
-          parts[3].exercises
-        }
-          {" "}exercises
-      </p>
+      <h4>
+        Total of {' '}
+        {parts.reduce((sum, part) => {
+          return sum + part.exercises;
+        }, 0)}{' '}
+        exercises
+      </h4>
     </div>
   );
 };
