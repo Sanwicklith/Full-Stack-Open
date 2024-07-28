@@ -1,19 +1,16 @@
+import Header from './Header';
+import Content from './Content';
+// import Total from './Total';
 
-import Header from './Header'
-import Content from './Content'
-import Total from './Total'
-
-
-const Course = ({course}) => {
-  const {name, parts} = course;
-  console.log(name)
+const Course = ({ course }) => {
+  // const { parts } = course;
   return (
     <div>
-      <Header  course={course}/>
-      <Content parts={parts}/>
-      <Total parts={parts}/>
+      <Header course={course} />
+      <Content course={course} />
+      {/* <Total parts={parts} /> */}
     </div>
-  )
-}
+  );
+};
 
-export default Course
+export default Course;

@@ -1,12 +1,19 @@
 import Part from "./Part";
+import Total from "./Total";
 
-const Content = ({ parts }) => {
+const Content = ({ course }) => {
+
+  const {parts, name} = course
+
   return (
     <div>
-      <Part part={parts[0]} />
-      <Part part={parts[1]} />
-      <Part part={parts[2]} />
-      <Part part={parts[3]} />
+      <h3>{name}</h3>
+     {
+      parts.map((part) => (
+        <Part key={part.id} part={part} />
+      ))
+     }
+     <Total parts={parts}/>
     </div>
   );
 };
