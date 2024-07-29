@@ -34,26 +34,26 @@ const App = () => {
     setPerson({ ...person, [e.target.name]: e.target.value });
   };
 
-  const handleFilter = e => {
-    const filterStr = e.target.value;
-    setFilter(filterStr);
-    const filteredPersons = persons.filter(person => {
-      return person.name.toLowerCase().includes(filterStr.toLowerCase());
-    });
-    setPersons(filteredPersons);
+  const handleFilterChange = e => {
+    setFilter(e.target.value);
   };
+
+  // Filter persons based on the filter state
+  const filteredPersons = persons.filter(p =>
+    p.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <div>
       <h2>Phonebook</h2>
       <div className="filter">
-        filter shown with:{' '}
+        filter shown with: 
         <input
           name="filter"
           type="text"
           placeholder="Filter names"
           value={filter}
-          onChange={handleFilter}
+          onChange={handleFilterChange}
         />
       </div>
       <h2>add a new</h2>
@@ -70,7 +70,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <div>
-        {persons.map((p, i) => (
+        {filteredPersons.map((p, i) => (
           <p key={i}>
             {p.name} {p.number}
           </p>
