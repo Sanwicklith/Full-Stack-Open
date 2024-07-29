@@ -7,9 +7,17 @@ const App = () => {
   const handleFormSubmit = e => {
     e.preventDefault();
     const newPerson = e.target.name.value;
-    // console.log(newPerson);
-    setPersons(persons.concat({ name: newPerson }));
-    setNewName('');
+
+    // Extract names from the persons array
+    const personNames = persons.map(person => person.name);
+
+    // Check if newPerson is already in the personNames array
+    if (personNames.includes(newPerson)) {
+      alert(`${newPerson} is already added to phonebook`);
+    } else {
+      setPersons(persons.concat({ name: newPerson }));
+      setNewName('');
+    }
   };
 
   const handleChange = e => setNewName(e.target.value);
