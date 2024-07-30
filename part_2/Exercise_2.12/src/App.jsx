@@ -34,8 +34,9 @@ const App = () => {
     } else {
       axios.post(url, { name: person.name.trim(), number: person.number.trim() } ).then(res=>{
         console.log(res)
+        setPersons(persons.concat({ name: person.name.trim(), number: person.number.trim() }));
       })
-      // setPersons(persons.concat({ name: person.name.trim(), number: person.number.trim() }));
+      
       setPerson({ name: '', number: '' });
     }
   };
