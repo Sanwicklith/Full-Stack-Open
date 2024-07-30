@@ -10,53 +10,57 @@ const App = () => {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    personService.getAllPersons()
-      .then(initialPersons => {
-        setPersons(initialPersons);
-      });
+    personService.getAllPersons().then(initialPersons => {
+      setPersons(initialPersons);
+    });
   }, []);
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = e => {
     e.preventDefault();
     const newPersonName = person.name.trim().toLowerCase();
     const personNames = persons.map(p => p.name.toLowerCase());
     const newPerson = { name: person.name.trim(), number: person.number.trim() };
 
     if (personNames.includes(newPersonName)) {
-      alert(`${person.name} is already added to phonebook`);
-      setPerson({ name: '', number: '' });
-    } else {
-      personService.createPerson(newPerson)
-        .then(addedPerson => {
-          if (addedPerson) {
-            setPersons(persons.concat(addedPerson));
+      const personToUpdate = persons.find(p => p.name.toLowerCase() === newPersonName);
+      if (
+        window.confirm(
+          `${person.name} is already added to phonebook. Replace the old number with the new one?`
+        )
+      ) {
+        personService.update(personToUpdate.id, newPerson)
+          .then(updatedPerson => {
+            setPersons(persons.map(p => (p.id === updatedPerson.id ? updatedPerson : p)));
             setPerson({ name: '', number: '' });
-          }
-        });
+          });
+      }
+    } else {
+      personService.createPerson(newPerson).then(addedPerson => {
+        if (addedPerson) {
+          setPersons(persons.concat(addedPerson));
+          setPerson({ name: '', number: '' });
+        }
+      });
     }
   };
 
-  const handleFormChange = (e) => {
+  const handleFormChange = e => {
     setPerson({ ...person, [e.target.name]: e.target.value });
   };
 
-  const handleFilterChange = (e) => {
+  const handleFilterChange = e => {
     setFilter(e.target.value);
   };
-  const handleDelete = (id)=>{
-    if (window.confirm(`Delete ${persons.find(p => p.id === id).name}?`)){
-      personService.deletePerson(id)
-      .then(res =>{
-        setPersons(persons.filter(p => p.id !== res.data.id));
-      })
+
+  const handleDelete = id => {
+    if (window.confirm(`Delete ${persons.find(p => p.id === id).name}?`)) {
+      personService.deletePerson(id).then(() => {
+        setPersons(persons.filter(p => p.id !== id));
+      });
     }
-  }
+  };
 
-
-
-  const filteredPersons = persons.filter(p =>
-    p.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  const filteredPersons = persons.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
 
   return (
     <div>
@@ -69,10 +73,7 @@ const App = () => {
         handleFormSubmit={handleFormSubmit}
       />
       <h2>Numbers</h2>
-      <Persons 
-        filteredPersons={filteredPersons} 
-        handleDelete={handleDelete}
-      />
+      <Persons filteredPersons={filteredPersons} handleDelete={handleDelete} />
     </div>
   );
 };
