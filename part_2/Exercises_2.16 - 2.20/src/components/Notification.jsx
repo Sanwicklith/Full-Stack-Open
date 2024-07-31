@@ -1,10 +1,19 @@
 
 
 const Notification = ({message}) => {
+  const notificationStyle = {
+    borderStyle: 'solid',
+    borderRadius:5,
+    
+    color: 'green',
+    // backgroundColor: '#333',
+    padding: 10,
+    margin:20
+  }
   return (
-    <div>
+    <div >
       {
-        message ? message: ""
+        message ? ( <div style={notificationStyle}>{message}</div> ): ""
       }
     </div>
   )
