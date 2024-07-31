@@ -37,6 +37,13 @@ const App = () => {
           setTimeout(() => {
             setNotification(null);
           }, 5000);
+        }).catch(e=>{
+          setNotification(`Information of ${newPerson.name} has already been removed from server`);
+          setTimeout(() => {
+            setNotification(null);
+          }, 5000)
+          setPerson({ name: '', number: '' })
+          console.log(e)
         });
       }
     } else {
